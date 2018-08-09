@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.xixi.doubleTableSelect.mapper.GoodsClassMapper">
+	<resultMap type="GoodsClass" id="goodsMap">
+		 <id column="goodsClassId" property="goodsClassId" />
+		 <result column="goodsClassName" property="goodsClassName" />
+		  <collection property="goodsa" ofType="Goods">
+		    <id column="goodsId" property="goodsId" />
+		    <result column="goodsName" property="goodsName" />
+		    <result column="goodsType" property="goodsType" />
+		    <result column="goodsClassId" property="goodsClassId" />
+		    <result column="goodsPrice" property="goodsPrice" />
+		  </collection>
+		  
+	</resultMap>
+	<select id="selectGoodsClass" resultMap="goodsMap">
+		SELECT * FROM `goods` JOIN `goodsclass` ON  `goods`.`goodsClassId`=`goodsclass`.`goodsClassId` WHERE `goodsclass`.`goodsClassId`=1
+	</select>
+	
+	<insert id="insertGoodsClass" parameterType="GoodsClass"
+  	useGeneratedKeys="true" keyProperty="goodsClassId">
+		INSERT INTO `ks`.`goodsClass` (
+			`goodsClassName`
+		
+		)
+		VALUES
+		(
+			#{goodsClassName}
+		   
+		) ;
+
+	</insert>
+	<!-- <select id="selectGoods" resultType="Goods">
+		SELECT * FROM `goods` WHERE `goods`.`goodsClassId`=#{0};
+	</select> -->
+</mapper>

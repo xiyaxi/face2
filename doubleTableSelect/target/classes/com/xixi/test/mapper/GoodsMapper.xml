@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xixi.test.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.xixi.test.entity.Goods" >
+    <id column="goodsId" property="goodsid" jdbcType="INTEGER" />
+    <result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="goodsType" property="goodstype" jdbcType="VARCHAR" />
+    <result column="goodsClassId" property="goodsclassid" jdbcType="INTEGER" />
+    <result column="goodsPrice" property="goodsprice" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goodsId, goodsName, goodsType, goodsClassId, goodsPrice
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xixi.test.entity.Goods" >
+    insert into goods (goodsId, goodsName, goodsType, 
+      goodsClassId, goodsPrice)
+    values (#{goodsid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{goodstype,jdbcType=VARCHAR}, 
+      #{goodsclassid,jdbcType=INTEGER}, #{goodsprice,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xixi.test.entity.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsid != null" >
+        goodsId,
+      </if>
+      <if test="goodsname != null" >
+        goodsName,
+      </if>
+      <if test="goodstype != null" >
+        goodsType,
+      </if>
+      <if test="goodsclassid != null" >
+        goodsClassId,
+      </if>
+      <if test="goodsprice != null" >
+        goodsPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstype != null" >
+        #{goodstype,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsclassid != null" >
+        #{goodsclassid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprice != null" >
+        #{goodsprice,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xixi.test.entity.Goods" >
+    update goods
+    <set >
+      <if test="goodsname != null" >
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstype != null" >
+        goodsType = #{goodstype,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsclassid != null" >
+        goodsClassId = #{goodsclassid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprice != null" >
+        goodsPrice = #{goodsprice,jdbcType=REAL},
+      </if>
+    </set>
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xixi.test.entity.Goods" >
+    update goods
+    set goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsType = #{goodstype,jdbcType=VARCHAR},
+      goodsClassId = #{goodsclassid,jdbcType=INTEGER},
+      goodsPrice = #{goodsprice,jdbcType=REAL}
+    where goodsId = #{goodsid,jdbcType=INTEGER}
+  </update>
+</mapper>

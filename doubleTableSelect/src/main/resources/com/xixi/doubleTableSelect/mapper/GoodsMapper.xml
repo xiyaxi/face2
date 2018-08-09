@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.xixi.doubleTableSelect.mapper.GoodsMapper">
+	
+	<resultMap type="Goods" id="goodsSelectMap">
+		<id property="goodsId" column="goodsId"/>
+	    <result property="loginId" column="loginId" />
+	    <result property="goodsName" column="goodsName"/>
+	    <result property="goodsType" column="goodsType"/>
+	     <result property="goodsClassId" column="goodsClassId"/>
+	      <result property="goodsPrice" column="goodsPrice"/>
+            <!--assocication可以指定联合的JavaBean对象 
+                property="role"指定哪个属性是联合的对象
+                javaType:指定这个属性对象的类型
+            -->
+	    <association property="goodsClass" javaType="GoodsClass">
+	    	<id column="goodsClassId" property="goodsClassId"/>
+	    	<result column="goodsClassName" property="goodsClassName"/>
+	    </association>
+	</resultMap>
+	
+	<select id="selectGoods" resultMap="goodsSelectMap">
+		SELECT `goods`.`goodsId`,`goods`.`goodsName`,`goods`.`goodsType`,`goods`.`goodsClassId`,`goods`.`goodsPrice`,`goodsclass`.`goodsClassId`,`goodsclass`.`goodsClassName` FROM `goods` JOIN `goodsclass` ON `goods`.`goodsClassId`=`goodsclass`.`goodsClassId`
+	</select>
+	
+		<insert id="insertGoods" parameterType="Goods"
+  	useGeneratedKeys="true" keyProperty="goodsId">
+		INSERT INTO `ks`.`goods` (
+			`goodsName`,
+			`goodsType`,
+			`goodsClassId`,
+			`goodsPrice`
+		)
+		VALUES
+		(
+			#{goodsName},
+		    #{goodsType},
+		    #{goodsClassId},
+		    #{goodsPrice}
+		) ;
+		</insert>
+</mapper>
